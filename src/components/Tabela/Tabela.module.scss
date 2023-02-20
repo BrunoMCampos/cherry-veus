@@ -1,0 +1,41 @@
+.Tabela {
+    border-radius: 16px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    width: 100%;
+}
+
+.CabecalhoTabela {
+    padding: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.LinhasTabela {
+    font-size: 16px;
+    line-height: 32px;
+
+    td {
+        background-color: rgba(225, 225, 225, 1);
+        vertical-align: middle;
+
+        a {
+            span {
+                margin-top: 10px;
+            }
+        }
+    }
+}
+
+.PrimeiroItem {
+    border-radius: 16px 0px 0px 16px;
+}
+
+.UltimoItem {
+    border-radius: 0px 16px 16px 0px;
+}
+
+a {
+    color: inherit;
+}

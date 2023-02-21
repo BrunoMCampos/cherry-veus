@@ -1,4 +1,3 @@
-import React from "react";
 import style from "./MenuDireito.module.scss";
 
 function MenuDireito(){

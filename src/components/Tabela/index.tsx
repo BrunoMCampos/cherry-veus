@@ -1,4 +1,3 @@
-import React from "react";
 import Dado from "./Dado";
 import style from "./Tabela.module.scss";
 
@@ -52,47 +51,7 @@ function Tabela() {
             custoTotal: "R$ 50,71",
             precoDeVenda: "R$ 149,00",
             dataDeCriacao: "20/06/2022",
-        },
-        {
-            codigo: "066",
-            veu: "Véu Esmeralda",
-            percentualDeLucro: "30%",
-            custoTotal: "R$ 50,71",
-            precoDeVenda: "R$ 149,00",
-            dataDeCriacao: "20/06/2022",
-        },
-        {
-            codigo: "066",
-            veu: "Véu Esmeralda",
-            percentualDeLucro: "30%",
-            custoTotal: "R$ 50,71",
-            precoDeVenda: "R$ 149,00",
-            dataDeCriacao: "20/06/2022",
-        },
-        {
-            codigo: "066",
-            veu: "Véu Esmeralda",
-            percentualDeLucro: "30%",
-            custoTotal: "R$ 50,71",
-            precoDeVenda: "R$ 149,00",
-            dataDeCriacao: "20/06/2022",
-        },
-        {
-            codigo: "066",
-            veu: "Véu Thamires",
-            percentualDeLucro: "30%",
-            custoTotal: "R$ 50,71",
-            precoDeVenda: "R$ 149,00",
-            dataDeCriacao: "20/06/2022",
-        },
-        {
-            codigo: "066",
-            veu: "Véu Esmeralda",
-            percentualDeLucro: "30%",
-            custoTotal: "R$ 50,71",
-            precoDeVenda: "R$ 149,00",
-            dataDeCriacao: "20/06/2022",
-        },
+        }
     ];
     return (
         <table className={style.Tabela}>

@@ -1,16 +1,38 @@
-import React from "react";
 import style from "./NavegacaoLateral.module.scss";
+import { Link } from "react-router-dom";
 
 function NavegacaoLateral(){
+
+    const itensDeMenu = [{
+        label:"HOME",
+        to:"/"
+    },{
+        label:"VEUS",
+        to:"/veus"
+    },{
+        label:"ORÇAMENTOS",
+        to:"/orcamentos"
+    },{
+        label:"MATERIAIS",
+        to:"/materiais"
+    },{
+        label:"CLIENTES",
+        to:"/clientes"
+    },{
+        label:"VENDAS",
+        to:"/vendas"
+    }];
+
     return(
         <nav className={style.NavegacaoLateral}>
             <ul>
-                <li><a href="##">HOME</a></li>
-                <li><a href="##">VÉUS</a></li>
-                <li><a href="##">ORÇAMENTOS</a></li>
-                <li><a href="##">MATÉRIAS PRIMAS</a></li>
-                <li><a href="##">CLIENTE</a></li>
-                <li><a href="##">VENDAS</a></li>
+                {itensDeMenu.map((item,index)=>(
+                    <li key={index}>
+                        <Link to={item.to}>
+                            {item.label}
+                        </Link>
+                    </li>
+                ))}
             </ul>
         </nav>
     );

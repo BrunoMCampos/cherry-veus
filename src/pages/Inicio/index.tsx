@@ -1,7 +1,15 @@
+import Card from "components/Card/index";
+import Filtro from "components/Filtro";
+
+import style from "./Inicio.module.scss";
+
 export default function Inicio(){
     return(
         <section>
-            <h3>Teste</h3>
+            <Filtro />
+            <div className={style.ListaDeCards}>
+                <Card />
+            </div>
         </section>
     );
 }

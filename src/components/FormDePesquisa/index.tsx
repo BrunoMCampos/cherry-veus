@@ -1,35 +1,20 @@
-import { IconeBotao } from "types/IconeBotao";
-import Botao from "./Botao/index";
+import { Link } from "react-router-dom";
 
 import style from "./FormDePesquisa.module.scss";
+import BotaoPesquisar from "components/BotaoPesquisar";
+import BotaoAdicionar from "components/BotaoAdicionar";
+import Input from "components/Input";
 
-function FormDePesquisa(){
-
-    const iconeBotaoPesquisar: IconeBotao = {
-        className:"material-symbols-outlined", 
-        texto:"search"
-    };
-
-    const iconeBotaoAdicionar: IconeBotao = {
-        className:"material-symbols-outlined", 
-        texto:"add_circle"
-    };
-
+function FormDePesquisa({tituloPagina, linkCadastro}: {tituloPagina:string, linkCadastro: string}){
     return(
         <form className={style.BarraDePesquisa}>
-            <input type="text" placeholder="Dados de Pesquisa" />
-            <Botao 
-                type="submit"
-                texto="Pesquisar"
-                icone={iconeBotaoPesquisar}
-            />
-            <a href="##">
-                <Botao
-                    type="button"
-                    texto="Adicionar Orçamento"
-                    icone={iconeBotaoAdicionar}
-                />
-            </a>
+            <Input placeHolder="Dados de Pesquisa"/>
+            <BotaoPesquisar />
+            <Link to={linkCadastro}>
+                <BotaoAdicionar>
+                    {tituloPagina}
+                </BotaoAdicionar>
+            </Link>
         </form>
     );
 }

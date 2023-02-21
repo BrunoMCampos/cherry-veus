@@ -1,3 +1,4 @@
+import NovoOrcamento from "pages/NovoOrcamento";
 import PaginaPadrao from "components/PaginaPadrao";
 import Inicio from "pages/Inicio";
 import Orcamentos from "pages/Orcamentos/Orcamentos";
@@ -9,7 +10,8 @@ export default function AppRouter(){
             <Routes>
                 <Route path="/" element={<PaginaPadrao />}>
                     <Route index element={<Inicio />} />
-                    <Route path="orcamentos" element={<Orcamentos />}/>
+                    <Route path="orcamentos" element={<Orcamentos />}/>  
+                    <Route path="orcamentos/novo-orcamento" element={<NovoOrcamento />}/>
                 </Route>
             </Routes>
         </Router>

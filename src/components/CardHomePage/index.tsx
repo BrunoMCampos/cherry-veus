@@ -1,6 +1,6 @@
 import style from "./Card.module.scss";
 
-export default function Card(){
+export default function CardHomePage(){
 
     const cards = [{
         data:"02/02/2023",

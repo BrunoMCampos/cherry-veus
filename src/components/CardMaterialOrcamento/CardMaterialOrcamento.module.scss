@@ -1,0 +1,62 @@
+.Card{
+    margin: 16px 0;
+    background-color: rgba(175, 198, 255, 1);
+    border-radius: 16px;
+    padding: 16px;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__Cabecalho{
+        font-size: 24px;
+        font-weight: bold;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+
+        &__Titulo{
+            margin-right: 16px;
+        }
+    }
+
+    &__DadosPrincipais{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+
+        &__Colunas{
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+
+            span{
+                margin-bottom: 8px;
+                text-align: start;
+            }
+
+            Input{
+                margin-bottom:8px;
+            }
+        }
+    }
+
+    &__DadosTotais{
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        
+        span{
+            margin-bottom: 8px;
+            text-align: start;
+        }
+
+        Input{
+            margin-bottom:8px;
+        }
+    }
+}

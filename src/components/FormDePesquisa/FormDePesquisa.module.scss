@@ -7,32 +7,4 @@
         text-decoration: none;
         color: inherit;
     }
-
-    input{
-        width: 100%;
-        border-radius: 16px;
-        border-width: 0px;
-        padding: 10px;
-        font-size: 16px;
-    }
-}
-
-.Botao{
-    background-color: rgba(204, 233, 255, 1);
-    border-radius: 16px;
-    border-width: 0px;
-    color:rgba(41, 64, 82, 1);
-    font-size: 16px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    //width: 150px;
-    height: 36px;
-    padding: 8px 24px;
-    margin-left: 20px;
-    white-space: nowrap;
-
-    span{
-        width: 100%;
-    }
 }

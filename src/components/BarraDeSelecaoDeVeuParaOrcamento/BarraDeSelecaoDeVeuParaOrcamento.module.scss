@@ -1,0 +1,9 @@
+.Barra{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &__TextoVeu{
+        margin-right: 20px;
+    }
+}

@@ -7,7 +7,9 @@ function Orcamentos() {
     return (
         <> 
             <div>
-                <FormDePesquisa />
+                <FormDePesquisa 
+                    tituloPagina="Orçamento"
+                    linkCadastro="novo-orcamento" />
             </div>
             <div className={style.FrameDeTabela}>
                 <Tabela />

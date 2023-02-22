@@ -11,7 +11,7 @@ export default function BarraDeSelecaoDeVeuParaOrcamento(){
         <div className={style.Barra}>
             <span className={style.Barra__TextoVeu}>Véu:</span>
             <Input placeHolder="Selecione o Véu" disabled/>
-            <BotaoPesquisar {onclick(()=>ExibirDivFlutuante())}>
+            <BotaoPesquisar onClick={ExibirDivFlutuante}>
                 Selecionar Véu
             </BotaoPesquisar>
             <Link to="">
@@ -26,7 +26,6 @@ export default function BarraDeSelecaoDeVeuParaOrcamento(){
 function ExibirDivFlutuante(){
     console.log("te");
     return(
-        <div>
-        </div>
+        <DivFlutuante/>
     );
 }

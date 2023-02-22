@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
 import style from "./FormDePesquisa.module.scss";
-import BotaoPesquisar from "components/BotaoPesquisar";
-import BotaoAdicionar from "components/BotaoAdicionar";
+import BotaoPesquisar from "components/Botoes/BotaoPesquisar";
+import BotaoAdicionar from "components/Botoes/BotaoAdicionar";
 import Input from "components/Input";
 
 function FormDePesquisa({tituloPagina, linkCadastro}: {tituloPagina:string, linkCadastro: string}){

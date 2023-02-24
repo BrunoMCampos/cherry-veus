@@ -1,9 +1,9 @@
-import FormDePesquisa from "components/FormDePesquisa";
+import BarraDePesquisa from "components/BarraDePesquisa";
 import Tabela from "components/Tabela";
 
 import style from "./Orcamentos.module.scss";
 
-function Orcamentos() {
+export default function Orcamentos() {
 
     const cabecalho = [
         "Opções",
@@ -18,7 +18,7 @@ function Orcamentos() {
     const dados = [
         {
             codigo: "007",
-            veu: "Véu Hanah",
+            nomeVeu: "Véu Hanah",
             percentualDeLucro: "30%",
             custoTotal: "R$ 60,71",
             precoDeVenda: "R$ 156,00",
@@ -26,7 +26,7 @@ function Orcamentos() {
         },
         {
             codigo: "008",
-            veu: "Véu Caroline",
+            nomeVeu: "Véu Caroline",
             percentualDeLucro: "30%",
             custoTotal: "R$ 50,71",
             precoDeVenda: "R$ 130,00",
@@ -34,7 +34,7 @@ function Orcamentos() {
         },
         {
             codigo: "052",
-            veu: "Véu Esmeralda",
+            nomeVeu: "Véu Esmeralda",
             percentualDeLucro: "30%",
             custoTotal: "R$ 50,71",
             precoDeVenda: "R$ 139,00",
@@ -42,7 +42,7 @@ function Orcamentos() {
         },
         {
             codigo: "073",
-            veu: "Véu Kamilly",
+            nomeVeu: "Véu Kamilly",
             percentualDeLucro: "30%",
             custoTotal: "R$ 50,71",
             precoDeVenda: "R$ 125,00",
@@ -50,7 +50,7 @@ function Orcamentos() {
         },
         {
             codigo: "066",
-            veu: "Véu Esmeralda",
+            nomeVeu: "Véu Esmeralda",
             percentualDeLucro: "30%",
             custoTotal: "R$ 50,71",
             precoDeVenda: "R$ 149,00",
@@ -58,18 +58,18 @@ function Orcamentos() {
         }
     ];
 
+    const icones =["Editar","Deletar"];
+
     return (
         <> 
             <div>
-                <FormDePesquisa 
+                <BarraDePesquisa 
                     tituloPagina="Orçamento"
                     linkCadastro="novo-orcamento" />
             </div>
             <div className={style.FrameDeTabela}>
-                <Tabela cabecalho={cabecalho} dados={dados}/>
+                <Tabela cabecalho={cabecalho} dados={dados} icones={icones}/>
             </div>
         </>
     );
 }
-
-export default Orcamentos;

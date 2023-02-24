@@ -13,7 +13,7 @@ export default function BarraDeSelecaoDeVeuParaOrcamento(){
             <Link to="selecionar-veu">
                 <BotaoPesquisar>
                     Selecionar Véu
-                </BotaoPesquisar >
+                </BotaoPesquisar>
             </Link>
             <Link to="">
                 <BotaoAdicionar>

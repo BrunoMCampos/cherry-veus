@@ -1,8 +1,10 @@
-import { DadosTabelaVeu } from "types/DadosTabelaVeu";
-import DadosVeu from "./DadosVeu";
+import { useState } from "react";
+import { DadosVeuOrcamento } from "types/DadosVeuOrcamento";
+import Dado from "./Dado";
+
 import style from "./Tabela.module.scss";
 
-function Tabela({cabecalho, dados}:{cabecalho:string[], dados:DadosTabelaVeu[]}) {
+export default function Tabela({cabecalho, dados, icones}:{cabecalho:string[], dados:DadosVeuOrcamento[], icones:string[]}) {
     return (
         <table className={style.Tabela}>
             <>
@@ -22,12 +24,10 @@ function Tabela({cabecalho, dados}:{cabecalho:string[], dados:DadosTabelaVeu[]})
                 </thead>
                 <tbody>
                     {dados.map(item => (
-                        <DadosVeu key={item.codigo} dados={item} />
+                        <Dado key={item.codigo} dados={item} icones={icones}/>
                     ))}
                 </tbody>
             </>
         </table>
     );
 }
-
-export default Tabela;

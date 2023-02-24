@@ -3,6 +3,7 @@ import PaginaPadrao from "components/PaginaPadrao";
 import Inicio from "pages/Inicio";
 import Orcamentos from "pages/Orcamentos/Orcamentos";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SelecionarVeuParaOrcamento from "pages/SelecionarVeuParaOrcamento";
 
 export default function AppRouter(){
     return(
@@ -12,6 +13,7 @@ export default function AppRouter(){
                     <Route index element={<Inicio />} />
                     <Route path="orcamentos" element={<Orcamentos />}/>  
                     <Route path="orcamentos/novo-orcamento" element={<NovoOrcamento />}/>
+                    <Route path="orcamentos/novo-orcamento/selecionar-veu" element={<SelecionarVeuParaOrcamento />}></Route>
                 </Route>
             </Routes>
         </Router>

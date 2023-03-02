@@ -1,7 +1,7 @@
 import style from "./NavegacaoLateral.module.scss";
 import { Link } from "react-router-dom";
 
-function NavegacaoLateral(){
+export default function NavegacaoLateral(){
 
     const itensDeMenu = [{
         label:"HOME",
@@ -28,7 +28,7 @@ function NavegacaoLateral(){
             <ul>
                 {itensDeMenu.map((item,index)=>(
                     <li key={index}>
-                        <Link to={item.to}>
+                        <Link to={item.to} >
                             {item.label}
                         </Link>
                     </li>
@@ -37,5 +37,3 @@ function NavegacaoLateral(){
         </nav>
     );
 }
-
-export default NavegacaoLateral;

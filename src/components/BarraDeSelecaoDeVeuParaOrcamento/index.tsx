@@ -9,13 +9,13 @@ export default function BarraDeSelecaoDeVeuParaOrcamento(){
     return(
         <div className={style.Barra}>
             <span className={style.Barra__TextoVeu}>Véu:</span>
-            <Input placeHolder="Selecione o Véu" disabled/>
+            <Input placeHolder="Selecione o Véu" id="" disabled/>
             <Link to="selecionar-veu">
                 <BotaoPesquisar>
                     Selecionar Véu
                 </BotaoPesquisar>
             </Link>
-            <Link to="">
+            <Link to="adicionar-material">
                 <BotaoAdicionar>
                     Material
                 </BotaoAdicionar>

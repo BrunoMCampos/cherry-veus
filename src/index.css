@@ -58,3 +58,21 @@ body{
     width: 98vw;
     margin: 0 auto;
 }
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.FrameDePesquisa{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    vertical-align: middle;
+}
+.FrameDeTabela{
+    background-color: white;
+    border-radius: 16px;
+    margin-top: 14px;
+    padding: 10px 20px;
+}

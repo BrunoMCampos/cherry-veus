@@ -19,3 +19,6 @@
 .Botao:hover{
     cursor:pointer;
 }
+.Botao:disabled{
+    background-color: rgba(225, 225, 225, 1);
+}

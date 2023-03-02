@@ -5,7 +5,7 @@ export default function BotaoAdicionar({children}:{children:string}){
         <button className={style.Botao}>
             <span className="material-symbols-outlined">add_circle</span>
             <span>&nbsp;</span>
-            <span>{"Adicionar " + children}</span>
+            <span>{children}</span>
         </button>
     );
 }

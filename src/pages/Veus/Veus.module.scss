@@ -1,0 +1,36 @@
+.Form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Dados{
+    display: flex;
+    flex-direction: column;
+    
+    label{
+        white-space: nowrap;
+        margin-right: 16px;
+    }
+
+    &__Item{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+}
+
+.Botoes{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.FrameDeBotoes{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

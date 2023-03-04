@@ -1,8 +1,8 @@
 import style from "components/Tabelas/Tabela.module.scss";
-import LinhasTabelaListagemMateriais from "components/Tabelas/Linhas/LinhasTabelaListagemMateriais";
 import { DadosCompletosMaterial } from "types/DadosCompletosMaterial";
+import LinhasTabelaSelecionarMaterialOrcamento from "components/Tabelas/Linhas/LinhasTabelaSelecionarMaterialOrcamento";
 
-export default function TabelaListagemMateriais({
+export default function TabelaSelecionarMaterialOrcamento({
     materiais,
 }: {
     materiais?: DadosCompletosMaterial[];
@@ -28,7 +28,7 @@ export default function TabelaListagemMateriais({
             </thead>
             <tbody>
                 {materiais?.map((item) => (
-                    <LinhasTabelaListagemMateriais
+                    <LinhasTabelaSelecionarMaterialOrcamento
                         key={item.codigoMaterial}
                         dados={item}
                     />

@@ -1,11 +1,11 @@
-import axios from "axios";
 import BotaoCancelar from "components/Botoes/BotaoCancelar";
 import BotaoLimpar from "components/Botoes/BotaoLimpar";
 import BotaoSalvar from "components/Botoes/BotaoSalvar";
 import Input from "components/Input";
+import instanciaAxios from "InstanciaAxios/instanciaAxios";
 import style from "pages/Veus/Veus.module.scss";
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CadastrarVeu() {
 
@@ -15,7 +15,7 @@ export default function CadastrarVeu() {
 
     const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
         evento.preventDefault();
-        axios.post("http://localhost:8080/veus", {
+        instanciaAxios.post("veus", {
             nome: nomeVeu
         })
             .then(() => {

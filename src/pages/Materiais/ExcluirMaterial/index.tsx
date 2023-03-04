@@ -1,84 +1,64 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { DadosCompletosVeu } from "types/DadosCompletosVeu";
 import style from "pages/Veus/Veus.module.scss";
 import BotaoCancelar from "components/Botoes/BotaoCancelar";
-import BotaoLimpar from "components/Botoes/BotaoLimpar";
-import BotaoSalvar from "components/Botoes/BotaoSalvar";
 import Input from "components/Input";
+import BotaoConfirmar from "components/Botoes/BotaoConfirmar";
 import instanciaAxios from "InstanciaAxios/instanciaAxios";
+import { DadosCompletosMaterial } from "types/DadosCompletosMaterial";
 
-export default function EditarVeu() {
+export default function ExcluirMaterial() {
     const navigate = useNavigate();
 
     const parametros = useParams();
 
-    const dadosEmBranco:DadosCompletosVeu = {
-        codigoVeu:0,
-        nome:"",
-        dataCadastro:"",
-        totalVendido:0
-    };
-
-    const [nomeVeu, setNomeVeu] = useState("");
+    const [nomeMaterial, setNomeMaterial] = useState("");
     const [codigo, setCodigo] = useState(0);
     const [dataCadastro, setDataCadastro] = useState("");
-    const [totalVendido, setTotalVendido] = useState(0);
-
-    const [dados, setDados] = useState(dadosEmBranco);
+    const [preco, setPreco] = useState(0);
 
     useEffect(() => {
         if (parametros.codigo) {
             instanciaAxios
-                .get<DadosCompletosVeu>(
-                    `veus/${parametros.codigo}`
+                .get<DadosCompletosMaterial>(
+                    `materiais/${parametros.codigo}`
                 )
                 .then((resposta) => {
-                    setCodigo(resposta.data.codigoVeu);
-                    setNomeVeu(resposta.data.nome);
+                    setCodigo(resposta.data.codigoMaterial);
+                    setNomeMaterial(resposta.data.nome);
                     setDataCadastro(resposta.data.dataCadastro);
-                    setTotalVendido(resposta.data.totalVendido);
-                    setDados(resposta.data);
+                    setPreco(resposta.data.preco);
                 });
         }
     }, [parametros]);
 
     const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
         evento.preventDefault();
-        instanciaAxios.put(`veus/${codigo}`, {
-            nome:nomeVeu
-        })
+        instanciaAxios.delete(`materiais/${codigo}`)
             .then(() => {
-                alert("Dados atualizados com sucesso!");
-                navigate("../veus");
+                alert("Dados excluidos com sucesso!");
+                navigate("../materiais");
             });
-    };
-
-    const limparCampos = () =>{
-        setCodigo(dados.codigoVeu);
-        setNomeVeu(dados.nome);
-        setDataCadastro(dados.dataCadastro);
-        setTotalVendido(dados.totalVendido);
     };
 
     return (
         <form className={style.Form} onSubmit={aoSubmeterForm}>
             <div className={style.Dados}>
                 <div className={style.Dados__Item}>
-                    <label htmlFor="codigoVeu">Código:</label>
+                    <label htmlFor="codigoMaterial">Código:</label>
                     <Input
-                        id="codigoVeu"
+                        id="codigoMaterial"
                         value={codigo.toString()}
                         type="number"
                         disabled
                     />
                 </div>
                 <div className={style.Dados__Item}>
-                    <label htmlFor="nomeVeu">Nome do Véu:</label>
+                    <label htmlFor="nomeMaterial">Nome do Véu:</label>
                     <Input
-                        id="nomeVeu"
-                        value={nomeVeu}
-                        onChange={(evento) => setNomeVeu(evento.target.value)}
+                        disabled
+                        id="nomeMaterial"
+                        value={nomeMaterial}
                     />
                 </div>
                 <div className={style.Dados__Item}>
@@ -91,21 +71,20 @@ export default function EditarVeu() {
                     />
                 </div>
                 <div className={style.Dados__Item}>
-                    <label htmlFor="totalVendido">Total Vendido:</label>
+                    <label htmlFor="precoUnitario">Total Vendido:</label>
                     <Input 
                         disabled
                         type="number"
-                        id="totalVendido"
-                        value={totalVendido.toString()}
+                        id="precoUnitario"
+                        value={preco.toString()}
                     />
                 </div>
             </div>
             <div className={style.Botoes}>
-                <Link to={"../veus"}>
+                <Link to={"../materiais"}>
                     <BotaoCancelar />
                 </Link>
-                <BotaoLimpar onClick={limparCampos}/>
-                <BotaoSalvar />
+                <BotaoConfirmar />
             </div>
         </form>
     );

@@ -1,28 +1,27 @@
 import BarraDePesquisa from "components/BarraDePesquisa";
-import BotaoAdicionar from "components/Botoes/BotaoAdicionar";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { IPageable } from "types/IPageable";
+import instanciaAxios from "InstanciaAxios/instanciaAxios";
+import style from "pages/Materiais/Materiais.module.scss";
 import BotaoPaginaAnterior from "components/Botoes/BotaoPaginaAnterior";
 import BotaoProximaPagina from "components/Botoes/BotaoProximaPagina";
-import TabelaListagemVeus from "components/Tabelas/Tabelas/TabelaListagemVeus";
-import instanciaAxios from "InstanciaAxios/instanciaAxios";
-import style from "pages/Veus/Veus.module.scss";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { DadosLinhaTabelaVeu } from "types/DadosLinhaTabelaVeu";
-import { IPageable } from "types/IPageable";
+import { DadosCompletosMaterial } from "types/DadosCompletosMaterial";
+import TabelaSelecionarMaterialOrcamento from "components/Tabelas/Tabelas/TabelaSelecionarMaterialOrcamento";
 
-export default function ConsultaDeVeus(){
+export default function SelecionarMaterialOrcamento(){
 
     const parametros = useParams();
 
-    const [veus, setVeus] = useState<DadosLinhaTabelaVeu[]>();
+    const [materiais, setMateriais] = useState<DadosCompletosMaterial[]>();
     const [proximaPagina, setProximaPagina] = useState("");
     const [paginaAnterior, setPaginaAnterior] = useState("");
 
     useEffect(() => {
         if(parametros.pesquisa == null){
-            navegar("veus");
+            navegar("materiais");
         } else {
-            navegar(`veus?pesquisa=${parametros.pesquisa}`);
+            navegar(`materiais?pesquisa=${parametros.pesquisa}`);
         }
     }, [parametros]);
 
@@ -42,16 +41,16 @@ export default function ConsultaDeVeus(){
             pesquisa = parametros.pesquisa;
         }
         instanciaAxios
-            .get<IPageable<DadosLinhaTabelaVeu>>(destino)
+            .get<IPageable<DadosCompletosMaterial>>(destino)
             .then((resposta) => {
-                setVeus(resposta.data.content);
+                setMateriais(resposta.data.content);
                 if(resposta.data.last == false){
-                    setProximaPagina(`veus?pesquisa=${pesquisa}&page=${resposta.data.number+1}`);
+                    setProximaPagina(`materiais?pesquisa=${pesquisa}&page=${resposta.data.number+1}`);
                 } else {
                     setProximaPagina("");
                 }
                 if(resposta.data.first == false){
-                    setPaginaAnterior(`veus?pesquisa=${pesquisa}&page=${resposta.data.number-1}`);
+                    setPaginaAnterior(`materiais?pesquisa=${pesquisa}&page=${resposta.data.number-1}`);
                 } else{
                     setPaginaAnterior("");
                 }
@@ -61,15 +60,10 @@ export default function ConsultaDeVeus(){
     return(
         <>
             <div className="FrameDePesquisa">
-                <BarraDePesquisa destino="/veus/"/>
-                <Link to="../veus/cadastrar-veu">
-                    <BotaoAdicionar>
-                        Cadastrar Véu
-                    </BotaoAdicionar>
-                </Link>
+                <BarraDePesquisa destino="/orcamentos/novo/14/selecionar-material/"/>
             </div>
             <div className="FrameDeTabela">
-                <TabelaListagemVeus veus={veus}/>
+                <TabelaSelecionarMaterialOrcamento materiais={materiais}/>
                 <div className={style.FrameDeBotoes}>
                     {paginaAnterior!="" && 
                         <div onClick={pgAnterior}>

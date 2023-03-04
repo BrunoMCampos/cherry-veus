@@ -6,14 +6,20 @@ export default function Input({
     id,
     value,
     onChange,
-    type="text"
+    type="text",
+    onBlur,
+    min,
+    step
 }: {
     placeHolder?: string;
     disabled?: boolean;
-    id: string;
+    id?: string;
     value?:string,
     onChange?:React.ChangeEventHandler<HTMLInputElement>,
     type?:React.HTMLInputTypeAttribute,
+    onBlur?:React.FocusEventHandler<HTMLInputElement>,
+    min?:string | number | undefined,
+    step?: string | number
 }) {
     if (disabled) {
         return (
@@ -24,6 +30,8 @@ export default function Input({
                 id={id}
                 value={value}
                 disabled
+                min={min}
+                step={step}
             />
         );
     } else {
@@ -35,6 +43,9 @@ export default function Input({
                 id={id}
                 value={value}
                 onChange={onChange}
+                onBlur={onBlur}
+                min={min}
+                step={step}
             />
         );
     }

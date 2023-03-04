@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { DadosCompletosVeu } from "types/DadosCompletosVeu";
@@ -6,6 +5,7 @@ import style from "pages/Veus/Veus.module.scss";
 import BotaoCancelar from "components/Botoes/BotaoCancelar";
 import Input from "components/Input";
 import BotaoConfirmar from "components/Botoes/BotaoConfirmar";
+import instanciaAxios from "InstanciaAxios/instanciaAxios";
 
 export default function ExcluirVeu() {
     const navigate = useNavigate();
@@ -19,9 +19,9 @@ export default function ExcluirVeu() {
 
     useEffect(() => {
         if (parametros.codigo) {
-            axios
+            instanciaAxios
                 .get<DadosCompletosVeu>(
-                    `http://localhost:8080/veus/${parametros.codigo}`
+                    `veus/${parametros.codigo}`
                 )
                 .then((resposta) => {
                     setCodigo(resposta.data.codigoVeu);
@@ -34,7 +34,7 @@ export default function ExcluirVeu() {
 
     const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
         evento.preventDefault();
-        axios.delete(`http://localhost:8080/veus/${codigo}`)
+        instanciaAxios.delete(`veus/${codigo}`)
             .then(() => {
                 alert("Dados excluidos com sucesso!");
                 navigate("../veus");

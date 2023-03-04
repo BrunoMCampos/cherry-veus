@@ -1,28 +1,29 @@
 import BarraDePesquisa from "components/BarraDePesquisa";
 import BotaoAdicionar from "components/Botoes/BotaoAdicionar";
+import TabelaListagemOrcamentos from "components/Tabelas/Tabelas/TabelaListagemOrcamentos";
+import { Link, useParams } from "react-router-dom";
+
+import style from "pages/Orcamentos/Orcamentos.module.scss";
+import { useEffect, useState } from "react";
+import instanciaAxios from "InstanciaAxios/instanciaAxios";
+import { IPageable } from "types/IPageable";
 import BotaoPaginaAnterior from "components/Botoes/BotaoPaginaAnterior";
 import BotaoProximaPagina from "components/Botoes/BotaoProximaPagina";
-import TabelaListagemVeus from "components/Tabelas/Tabelas/TabelaListagemVeus";
-import instanciaAxios from "InstanciaAxios/instanciaAxios";
-import style from "pages/Veus/Veus.module.scss";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { DadosLinhaTabelaVeu } from "types/DadosLinhaTabelaVeu";
-import { IPageable } from "types/IPageable";
+import { DadosListagemGeralOrcamento } from "types/DadosListagemGeralOrcamento";
 
-export default function ConsultaDeVeus(){
+export default function ConsultaDeOrcamentos() {
 
     const parametros = useParams();
 
-    const [veus, setVeus] = useState<DadosLinhaTabelaVeu[]>();
+    const [orcamentos, setOrcamentos] = useState<DadosListagemGeralOrcamento[]>();
     const [proximaPagina, setProximaPagina] = useState("");
     const [paginaAnterior, setPaginaAnterior] = useState("");
 
     useEffect(() => {
         if(parametros.pesquisa == null){
-            navegar("veus");
+            navegar("orcamentos");
         } else {
-            navegar(`veus?pesquisa=${parametros.pesquisa}`);
+            navegar(`orcamentos?pesquisa=${parametros.pesquisa}`);
         }
     }, [parametros]);
 
@@ -42,34 +43,34 @@ export default function ConsultaDeVeus(){
             pesquisa = parametros.pesquisa;
         }
         instanciaAxios
-            .get<IPageable<DadosLinhaTabelaVeu>>(destino)
+            .get<IPageable<DadosListagemGeralOrcamento>>(destino)
             .then((resposta) => {
-                setVeus(resposta.data.content);
+                setOrcamentos(resposta.data.content);
                 if(resposta.data.last == false){
-                    setProximaPagina(`veus?pesquisa=${pesquisa}&page=${resposta.data.number+1}`);
+                    setProximaPagina(`orcamentos?pesquisa=${pesquisa}&page=${resposta.data.number+1}`);
                 } else {
                     setProximaPagina("");
                 }
                 if(resposta.data.first == false){
-                    setPaginaAnterior(`veus?pesquisa=${pesquisa}&page=${resposta.data.number-1}`);
+                    setPaginaAnterior(`orcamentos?pesquisa=${pesquisa}&page=${resposta.data.number-1}`);
                 } else{
                     setPaginaAnterior("");
                 }
             });
     };
 
-    return(
-        <>
+    return (
+        <> 
             <div className="FrameDePesquisa">
-                <BarraDePesquisa destino="/veus/"/>
-                <Link to="../veus/cadastrar-veu">
-                    <BotaoAdicionar>
-                        Cadastrar Véu
+                <BarraDePesquisa />
+                <Link to="novo-orcamento/selecionar-veu">
+                    <BotaoAdicionar >
+                        Novo Orcamento
                     </BotaoAdicionar>
                 </Link>
             </div>
             <div className="FrameDeTabela">
-                <TabelaListagemVeus veus={veus}/>
+                <TabelaListagemOrcamentos orcamentos={orcamentos}/>
                 <div className={style.FrameDeBotoes}>
                     {paginaAnterior!="" && 
                         <div onClick={pgAnterior}>

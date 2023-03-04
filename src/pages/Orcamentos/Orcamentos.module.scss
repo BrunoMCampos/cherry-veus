@@ -1,0 +1,54 @@
+.SubTitulo{
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.Form{
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+
+    &__Dados{
+
+        div{
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+
+            label{
+                margin-bottom: 4px;
+            }
+        }
+    }
+}
+
+.FrameDeBotoes{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.FormCadastro{
+    display: flex;
+    flex-direction: column;
+
+    &__Dados{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+
+        &__Item{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        &__Cards{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+    }
+}

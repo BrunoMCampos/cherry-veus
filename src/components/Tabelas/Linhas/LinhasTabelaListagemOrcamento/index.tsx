@@ -16,10 +16,10 @@ export default function LinhasTabelaListagemOrcamento({dados}:{dados:DadosListag
     return(
         <tr className={style.LinhasTabela}>
             <td>
-                <Link to={"editar/" + dados.codigoOrcamento}>
+                <Link to={"../orcamentos/editar/" + dados.codigoOrcamento}>
                     <IconeEditar />
                 </Link>
-                <Link to={"excluir/" + dados.codigoOrcamento}>       
+                <Link to={"../orcamentos/excluir/" + dados.codigoOrcamento}>       
                     <IconeExcluir />
                 </Link>
             </td>

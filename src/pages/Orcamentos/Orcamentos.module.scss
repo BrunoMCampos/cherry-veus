@@ -1,54 +1,117 @@
-.SubTitulo{
+.SubTitulo {
     font-size: 24px;
     margin-bottom: 16px;
 }
 
-.Form{
+.Form {
     display: flex;
     flex-direction: column;
     text-align: start;
 
-    &__Dados{
-
-        div{
+    &__Dados {
+        div {
             padding: 8px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            align-items: center;
 
-            label{
+            label {
                 margin-bottom: 4px;
+                white-space: nowrap;
+                margin-right: 8px;
             }
         }
     }
 }
 
-.FrameDeBotoes{
+.FrameDeBotoes {
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-top: 16px;
 }
 
-.FormCadastro{
+.FormCadastro {
     display: flex;
     flex-direction: column;
 
-    &__Dados{
+    &__SalvarECancelar {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-right: 8px;
+
+        button {
+            margin-left: 8px;
+        }
+
+        a {
+            margin-top: 8px;
+        }
+    }
+
+    &__Excluir {
+        button {
+            background-color: rgb(172, 3, 3);
+            span {
+                color: rgba(255, 255, 255, 0.753);
+            }
+        }
+    }
+
+    &__Dados {
         display: flex;
         flex-direction: column;
         margin-bottom: 16px;
 
-        &__Item{
+        &__Item {
             display: flex;
             flex-direction: row;
             align-items: center;
         }
 
-        &__Cards{
+        &__Cards {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             flex-wrap: wrap;
+        }
+    }
+
+    &__ValoresOrcamento {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        background-color: rgba(175, 198, 255, 1);
+        border-radius: 16px;
+        margin-top: 8px;
+        padding: 8px;
+
+        &__Linha{
+            display: flex;
+            align-items: end;
+        }
+
+        &__Coluna{
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__Item {
+            display: flex;
+            flex-direction: column;
+            margin: 0 8px;
+            width: 30%;
+
+            label {
+                margin: 4px;
+                font-weight: bold;
+            }
+            Input {
+                text-align: center;
+            }
         }
     }
 }

@@ -19,9 +19,9 @@ export default function SelecionarMaterialOrcamento(){
 
     useEffect(() => {
         if(parametros.pesquisa == null){
-            navegar("materiais");
+            navegar(`materiais?pesquisa=&codigoOrcamento=${parametros.codigo}`);
         } else {
-            navegar(`materiais?pesquisa=${parametros.pesquisa}`);
+            navegar(`materiais?pesquisa=${parametros.pesquisa}&codigoOrcamento=${parametros.codigo}`);
         }
     }, [parametros]);
 
@@ -45,12 +45,12 @@ export default function SelecionarMaterialOrcamento(){
             .then((resposta) => {
                 setMateriais(resposta.data.content);
                 if(resposta.data.last == false){
-                    setProximaPagina(`materiais?pesquisa=${pesquisa}&page=${resposta.data.number+1}`);
+                    setProximaPagina(`materiais?pesquisa=${pesquisa}&page=${resposta.data.number+1}&codigoOrcamento=${parametros.codigo}`);
                 } else {
                     setProximaPagina("");
                 }
                 if(resposta.data.first == false){
-                    setPaginaAnterior(`materiais?pesquisa=${pesquisa}&page=${resposta.data.number-1}`);
+                    setPaginaAnterior(`materiais?pesquisa=${pesquisa}&page=${resposta.data.number-1}&codigoOrcamento=${parametros.codigo}`);
                 } else{
                     setPaginaAnterior("");
                 }
@@ -60,7 +60,7 @@ export default function SelecionarMaterialOrcamento(){
     return(
         <>
             <div className="FrameDePesquisa">
-                <BarraDePesquisa destino="/orcamentos/novo/14/selecionar-material/"/>
+                <BarraDePesquisa destino={`/orcamentos/novo/${parametros.codigo}/selecionar-material/`}/>
             </div>
             <div className="FrameDeTabela">
                 <TabelaSelecionarMaterialOrcamento materiais={materiais}/>

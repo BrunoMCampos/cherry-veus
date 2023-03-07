@@ -4,5 +4,9 @@ export interface DadosListagemGeralOrcamento{
     custoTotal: number,
     percentualLucro: number,
     precoVenda: number,
-    dataDeCriacao: string
+    dataDeCriacao: string,
+    codigoVeu: number,
+    percentualImposto: number,
+    custoDespesas: number,
+    custoMaoDeObra: number
 }

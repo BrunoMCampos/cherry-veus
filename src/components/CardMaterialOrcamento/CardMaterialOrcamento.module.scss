@@ -3,7 +3,7 @@
     background-color: rgba(175, 198, 255, 1);
     border-radius: 16px;
     padding: 16px;
-    width: 45%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,13 +12,19 @@
         font-size: 24px;
         font-weight: bold;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
         margin-bottom: 16px;
 
-        &__Titulo{
-            margin-right: 16px;
+        &__Linha{
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 8px;
+
+            &__Titulo{
+                margin-right: 16px;
+            }
         }
     }
 
@@ -26,17 +32,23 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-between;
+        flex-wrap: wrap;
 
-        &__Colunas{
-            width: 45%;
+        &__Item{
+            width: 27%;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            background-color: aliceblue;
+            border-radius: 16px;
+            padding: 8px;
+            margin: 4px;
 
             span{
                 margin-bottom: 8px;
                 text-align: start;
+                white-space: nowrap;
             }
 
             Input{
@@ -44,19 +56,8 @@
             }
         }
     }
+}
 
-    &__DadosTotais{
-        width: 90%;
-        display: flex;
-        flex-direction: column;
-        
-        span{
-            margin-bottom: 8px;
-            text-align: start;
-        }
-
-        Input{
-            margin-bottom:8px;
-        }
-    }
+.CursorPointer{
+    cursor: pointer;
 }

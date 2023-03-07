@@ -62,8 +62,8 @@ export default function ConsultaDeOrcamentos() {
     return (
         <> 
             <div className="FrameDePesquisa">
-                <BarraDePesquisa />
-                <Link to="novo-orcamento/selecionar-veu">
+                <BarraDePesquisa destino="orcamentos/"/>
+                <Link to="novo/selecionar-veu">
                     <BotaoAdicionar >
                         Novo Orcamento
                     </BotaoAdicionar>

@@ -14,6 +14,7 @@ import CadastrarOrcamento from "pages/Orcamentos/CadastrarOrcamento";
 import SelecionarVeuParaOrcamento from "pages/Orcamentos/SelecionarVeuParaOrcamento";
 import SelecionarMaterialOrcamento from "pages/Orcamentos/SelecionarMaterialOrcamento";
 import AdicionarMaterialOrcamento from "pages/Orcamentos/AdicionarMaterialOrcamento";
+import ExcluirOrcamento from "pages/Orcamentos/ExcluirOrcamento";
 
 export default function AppRouter(){
     return(
@@ -22,7 +23,9 @@ export default function AppRouter(){
                 <Route path="/" element={<PaginaPadrao />}>
                     <Route index element={<Inicio />} />
                     <Route path="orcamentos" element={<ConsultaDeOrcamentos />}/>  
+                    <Route path="orcamentos/:pesquisa" element={<ConsultaDeOrcamentos />}/>  
                     <Route path="orcamentos/novo/:codigo" element={<CadastrarOrcamento />}/>  
+                    <Route path="orcamentos/excluir/:codigo" element={<ExcluirOrcamento />}/>  
                     <Route path="orcamentos/editar/:codigo" element={<CadastrarOrcamento />}/>  
                     <Route path="orcamentos/novo/selecionar-veu" element={<SelecionarVeuParaOrcamento />}/>  
                     <Route path="orcamentos/novo/:codigo/selecionar-veu" element={<SelecionarVeuParaOrcamento />}/>  

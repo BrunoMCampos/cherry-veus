@@ -2,7 +2,7 @@ import { DadosLinhaTabelaVeu } from "types/DadosLinhaTabelaVeu";
 
 import style from "components/Tabelas/Tabela.module.scss";
 import IconeConfirmar from "components/Icones/Confirmar";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import instanciaAxios from "InstanciaAxios/instanciaAxios";
 import { DadosListagemGeralOrcamento } from "types/DadosListagemGeralOrcamento";
 
@@ -29,16 +29,16 @@ export default function LinhasTabelaSelecionarVeuOrcamento({
                     codigoVeu: dadosVeu.codigoVeu
                 })
                 .then(resposta =>{
-                    navegacao(`/orcamentos/novo-orcamento/${resposta.data.codigoOrcamento}`);
+                    navegacao(`/orcamentos/novo/${resposta.data.codigoOrcamento}`);
                 });
         } else {
             instanciaAxios
-                .put<DadosListagemGeralOrcamento>("orcamentos",{
+                .put<DadosListagemGeralOrcamento>(`orcamentos/${parametros.codigo}`,{
                     codigoOrcamento: parametros.codigo,
                     codigoVeu: dadosVeu.codigoVeu
                 })
                 .then(resposta =>{
-                    navegacao(`/orcamentos/novo-orcamento/${resposta.data.codigoOrcamento}`);
+                    navegacao(`/orcamentos/editar/${resposta.data.codigoOrcamento}`);
                 });
         }
     };
@@ -46,7 +46,9 @@ export default function LinhasTabelaSelecionarVeuOrcamento({
     return (
         <tr className={style.LinhasTabela}>
             <td onClick={cadastrarOrcamento}>
-                <IconeConfirmar />
+                <Link to={""}>
+                    <IconeConfirmar />
+                </Link>
             </td>
             <td>{dadosVeu.codigoVeu}</td>
             <td>{dadosVeu.nome}</td>

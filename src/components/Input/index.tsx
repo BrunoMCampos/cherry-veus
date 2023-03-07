@@ -8,7 +8,9 @@ export default function Input({
     onChange,
     type="text",
     onBlur,
+    onFocus,
     min,
+    max,
     step
 }: {
     placeHolder?: string;
@@ -18,7 +20,9 @@ export default function Input({
     onChange?:React.ChangeEventHandler<HTMLInputElement>,
     type?:React.HTMLInputTypeAttribute,
     onBlur?:React.FocusEventHandler<HTMLInputElement>,
-    min?:string | number | undefined,
+    onFocus?:React.FocusEventHandler<HTMLInputElement>
+    min?:string | number,
+    max?:string | number,
     step?: string | number
 }) {
     if (disabled) {
@@ -31,6 +35,7 @@ export default function Input({
                 value={value}
                 disabled
                 min={min}
+                max = {max}
                 step={step}
             />
         );
@@ -45,7 +50,9 @@ export default function Input({
                 onChange={onChange}
                 onBlur={onBlur}
                 min={min}
+                max = {max}
                 step={step}
+                onFocus={onFocus}
             />
         );
     }

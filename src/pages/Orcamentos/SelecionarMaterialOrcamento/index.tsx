@@ -1,5 +1,5 @@
 import BarraDePesquisa from "components/BarraDePesquisa";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IPageable } from "types/IPageable";
 import instanciaAxios from "InstanciaAxios/instanciaAxios";
@@ -9,8 +9,7 @@ import BotaoProximaPagina from "components/Botoes/BotaoProximaPagina";
 import { DadosCompletosMaterial } from "types/DadosCompletosMaterial";
 import TabelaSelecionarMaterialOrcamento from "components/Tabelas/Tabelas/TabelaSelecionarMaterialOrcamento";
 
-export default function SelecionarMaterialOrcamento(){
-
+export default function SelecionarMaterialOrcamento() {
     const parametros = useParams();
 
     const [materiais, setMateriais] = useState<DadosCompletosMaterial[]>();
@@ -18,10 +17,12 @@ export default function SelecionarMaterialOrcamento(){
     const [paginaAnterior, setPaginaAnterior] = useState("");
 
     useEffect(() => {
-        if(parametros.pesquisa == null){
+        if (parametros.pesquisa == null) {
             navegar(`materiais?pesquisa=&codigoOrcamento=${parametros.codigo}`);
         } else {
-            navegar(`materiais?pesquisa=${parametros.pesquisa}&codigoOrcamento=${parametros.codigo}`);
+            navegar(
+                `materiais?pesquisa=${parametros.pesquisa}&codigoOrcamento=${parametros.codigo}`
+            );
         }
     }, [parametros]);
 
@@ -33,56 +34,71 @@ export default function SelecionarMaterialOrcamento(){
         navegar(paginaAnterior);
     };
 
-    const navegar = (destino:string) => {
-        let pesquisa:string;
-        if(parametros.pesquisa == null){
+    const navegar = (destino: string) => {
+        let pesquisa: string;
+        if (parametros.pesquisa == null) {
             pesquisa = "";
-        } else{
+        } else {
             pesquisa = parametros.pesquisa;
         }
         instanciaAxios
             .get<IPageable<DadosCompletosMaterial>>(destino)
             .then((resposta) => {
                 setMateriais(resposta.data.content);
-                if(resposta.data.last == false){
-                    setProximaPagina(`materiais?pesquisa=${pesquisa}&page=${resposta.data.number+1}&codigoOrcamento=${parametros.codigo}`);
+                if (resposta.data.last == false) {
+                    setProximaPagina(
+                        `materiais?pesquisa=${pesquisa}&page=${
+                            resposta.data.number + 1
+                        }&codigoOrcamento=${parametros.codigo}`
+                    );
                 } else {
                     setProximaPagina("");
                 }
-                if(resposta.data.first == false){
-                    setPaginaAnterior(`materiais?pesquisa=${pesquisa}&page=${resposta.data.number-1}&codigoOrcamento=${parametros.codigo}`);
-                } else{
+                if (resposta.data.first == false) {
+                    setPaginaAnterior(
+                        `materiais?pesquisa=${pesquisa}&page=${
+                            resposta.data.number - 1
+                        }&codigoOrcamento=${parametros.codigo}`
+                    );
+                } else {
                     setPaginaAnterior("");
                 }
             });
     };
 
-    return(
+    return (
         <>
             <div className="FrameDePesquisa">
-                <BarraDePesquisa destino={`/orcamentos/novo/${parametros.codigo}/selecionar-material/`}/>
+                <BarraDePesquisa
+                    destino={`/orcamentos/novo/${parametros.codigo}/selecionar-material/`}
+                />
+                <Link to={`../orcamentos/editar/${parametros.codigo}`}>
+                    <BotaoPaginaAnterior disabled={false}>
+                        Voltar
+                    </BotaoPaginaAnterior>
+                </Link>
             </div>
             <div className="FrameDeTabela">
-                <TabelaSelecionarMaterialOrcamento materiais={materiais}/>
+                <TabelaSelecionarMaterialOrcamento materiais={materiais} />
                 <div className={style.FrameDeBotoes}>
-                    {paginaAnterior!="" && 
+                    {(paginaAnterior != "" && (
                         <div onClick={pgAnterior}>
-                            <BotaoPaginaAnterior disabled={false}/>
+                            <BotaoPaginaAnterior disabled={false} />
                         </div>
-                    ||
+                    )) || (
                         <div>
-                            <BotaoPaginaAnterior disabled={true}/>
+                            <BotaoPaginaAnterior disabled={true} />
                         </div>
-                    }
-                    {proximaPagina!="" && 
+                    )}
+                    {(proximaPagina != "" && (
                         <div onClick={proximaPg}>
-                            <BotaoProximaPagina disabled={false}/>
+                            <BotaoProximaPagina disabled={false} />
                         </div>
-                    ||
+                    )) || (
                         <div>
-                            <BotaoProximaPagina disabled={true}/>
+                            <BotaoProximaPagina disabled={true} />
                         </div>
-                    }
+                    )}
                 </div>
             </div>
         </>

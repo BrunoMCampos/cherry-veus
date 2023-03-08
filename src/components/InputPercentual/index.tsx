@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import FormatarParaFloat from "types/FormatarParaFloat";
 import style from "./Input.module.scss";
 
-export default function InputDinheiro({
+export default function InputPercentual({
     placeHolder,
     disabled = false,
     id,
     setter,
     campo,
     onBlur,
-    valorPadrao = 0,
+    valorPadrao=0,
 }: {
     placeHolder?: string;
     disabled?: boolean;
@@ -22,14 +22,11 @@ export default function InputDinheiro({
     const [valorDoInput, setValorDoInput] = useState("");
 
     useEffect(() => {
-        setValorDoInput(`R$ ${campo.toFixed(2).replace(".", ",")}`);
+        setValorDoInput(`${campo.toFixed(2).replace(".", ",")} %`);
     }, []);
-
     useEffect(() => {
         if (campo == valorPadrao) {
-            setValorDoInput(`R$ ${valorPadrao.toFixed(2).replace(".", ",")}`);
-        } else if(disabled){
-            setValorDoInput(`R$ ${valorPadrao.toFixed(2).replace(".", ",")}`);
+            setValorDoInput(`${valorPadrao.toFixed(2).replace(".", ",")} %`);
         }
     }, [campo]);
 
@@ -41,7 +38,6 @@ export default function InputDinheiro({
                 className={style.CaixaDeTexto}
                 id={id}
                 disabled
-                value={valorDoInput}
             />
         );
     } else {
@@ -53,17 +49,27 @@ export default function InputDinheiro({
                 id={id}
                 value={valorDoInput}
                 onChange={(evento) => {
-                    setValorDoInput(
-                        `R$ ${FormatarParaFloat(evento.target.value)
-                            .toFixed(2)
-                            .replace(".", ",")}`
-                    );
-                    setter(FormatarParaFloat(evento.target.value));
+                    if (FormatarParaFloat(evento.target.value) <= 100) {
+                        setValorDoInput(
+                            `${FormatarParaFloat(evento.target.value)
+                                .toFixed(2)
+                                .replace(".", ",")}`
+                        );
+                        setter(FormatarParaFloat(evento.target.value));
+                    }
                 }}
                 onBlur={(evento) => {
+                    setValorDoInput(
+                        `${FormatarParaFloat(evento.target.value)
+                            .toFixed(2)
+                            .replace(".", ",")} %`
+                    );
                     if (onBlur != undefined) {
                         onBlur(evento);
                     }
+                }}
+                onFocus={() => {
+                    setValorDoInput(`${valorDoInput.replace(" %", "")}`);
                 }}
             />
         );

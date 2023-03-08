@@ -11,7 +11,6 @@ export default function InputParaApenasNumeros(
     } else {
         valor = valor.substring(0,valor.length-casasDecimais) + "." + valor.substring(valor.length-casasDecimais,valor.length);
         const parsedText = parseFloat(valor);
-        console.log(valor);
         if(limite != undefined){
             if(limite > parsedText){
                 setter(parsedText.toFixed(casasDecimais).replace(".",","));

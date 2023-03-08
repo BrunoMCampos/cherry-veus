@@ -1,35 +1,42 @@
-import { useState, useEffect } from "react";
-import FormatarParaFloat from "types/FormatarParaFloat";
 import style from "./Input.module.scss";
 
-export default function InputDinheiro({
+import { useEffect, useState } from "react";
+import FormatarParaFloat from "types/FormatarParaFloat";
+
+export default function InputNumerico({
     placeHolder,
     disabled = false,
     id,
     setter,
     campo,
+    casasDecimais = 2,
     onBlur,
-    valorPadrao = 0,
+    valorPadrao=0,
 }: {
     placeHolder?: string;
     disabled?: boolean;
     id?: string;
     campo: number;
     setter: (value: React.SetStateAction<number>) => void;
+    casasDecimais: number;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     valorPadrao?: number;
 }) {
     const [valorDoInput, setValorDoInput] = useState("");
 
     useEffect(() => {
-        setValorDoInput(`R$ ${campo.toFixed(2).replace(".", ",")}`);
+        setValorDoInput(`${campo.toFixed(casasDecimais).replace(".", ",")}`);
     }, []);
 
     useEffect(() => {
         if (campo == valorPadrao) {
-            setValorDoInput(`R$ ${valorPadrao.toFixed(2).replace(".", ",")}`);
-        } else if(disabled){
-            setValorDoInput(`R$ ${valorPadrao.toFixed(2).replace(".", ",")}`);
+            setValorDoInput(
+                `${valorPadrao.toFixed(casasDecimais).replace(".", ",")}`
+            );
+        } else if(disabled) {
+            setValorDoInput(
+                `${campo.toFixed(casasDecimais).replace(".", ",")}`
+            );
         }
     }, [campo]);
 
@@ -54,11 +61,13 @@ export default function InputDinheiro({
                 value={valorDoInput}
                 onChange={(evento) => {
                     setValorDoInput(
-                        `R$ ${FormatarParaFloat(evento.target.value)
-                            .toFixed(2)
+                        `${FormatarParaFloat(evento.target.value, casasDecimais)
+                            .toFixed(casasDecimais)
                             .replace(".", ",")}`
                     );
-                    setter(FormatarParaFloat(evento.target.value));
+                    setter(
+                        FormatarParaFloat(evento.target.value, casasDecimais)
+                    );
                 }}
                 onBlur={(evento) => {
                     if (onBlur != undefined) {

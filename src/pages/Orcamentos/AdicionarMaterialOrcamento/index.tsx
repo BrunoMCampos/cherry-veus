@@ -2,6 +2,9 @@ import BotaoCancelar from "components/Botoes/BotaoCancelar";
 import BotaoLimpar from "components/Botoes/BotaoLimpar";
 import BotaoSalvar from "components/Botoes/BotaoSalvar";
 import Input from "components/Input";
+import InputDinheiro from "components/InputDinheiro";
+import InputNumerico from "components/InputNumerico";
+import InputPercentual from "components/InputPercentual";
 import instanciaAxios from "InstanciaAxios/instanciaAxios";
 import style from "pages/Orcamentos/Orcamentos.module.scss";
 import { useEffect, useState } from "react";
@@ -17,7 +20,6 @@ export default function AdicionarMaterialOrcamento() {
     const [nomeMaterial, setNomeMaterial] = useState("");
 
     const [precoUnitario, setPrecoUnitario] = useState(0);
-    const [precoUnitarioPadrao, setPrecoUnitarioPadrao] = useState(0);
 
     const [quantidadeBrutaUtilizada, setQuantidadeBrutaUtilizada] = useState(0);
 
@@ -53,11 +55,11 @@ export default function AdicionarMaterialOrcamento() {
                 )
                 .then((resposta) => {
                     setPrecoUnitario(resposta.data.precoUnitarioMaterial);
-                    setPrecoUnitarioPadrao(resposta.data.precoUnitarioMaterial);
                     setQuantidadeBrutaUtilizada(
                         resposta.data.quantidadeUtilizada
                     );
                     setPerdaPercentual(resposta.data.perdaPercentual);
+
                     setNomeMaterial(resposta.data.nomeMaterial);
                     setRespostaAxios(resposta.data);
                 });
@@ -68,8 +70,10 @@ export default function AdicionarMaterialOrcamento() {
                 )
                 .then((resposta) => {
                     setPrecoUnitario(resposta.data.preco);
-                    setPrecoUnitarioPadrao(resposta.data.preco);
                     setNomeMaterial(resposta.data.nome);
+                    setQuantidadeBrutaUtilizada(0);
+                    setPerdaPercentual(0);
+                    respostaAxios.precoUnitarioMaterial = resposta.data.preco;
                 });
         }
         limparCampos();
@@ -80,7 +84,7 @@ export default function AdicionarMaterialOrcamento() {
     }, [respostaAxios]);
 
     const limparCampos = () => {
-        setPrecoUnitario(precoUnitarioPadrao);
+        setPrecoUnitario(respostaAxios.precoUnitarioMaterial);
         setQuantidadeBrutaUtilizada(respostaAxios.quantidadeUtilizada);
         setPerdaPercentual(respostaAxios.perdaPercentual);
         calcularCamposDisabled(true);
@@ -107,33 +111,13 @@ export default function AdicionarMaterialOrcamento() {
                 perdaB = quantidadeBrutaUtilizada * (perdaPercentual / 100);
                 custoP = perdaB * precoUnitario;
                 quantidadeTotalComP = quantidadeBrutaUtilizada + perdaB;
-                custoTotalIt =  quantidadeTotalComPerda * precoUnitario;
+                custoTotalIt = quantidadeTotalComPerda * precoUnitario;
             }
         }
-
         setPerdaBruta(perdaB);
         setCustoPerda(custoP);
         setQuantidadeTotalComPerda(quantidadeTotalComP);
         setCustoTotalItem(custoTotalIt);
-    };
-
-    const verificarInputDeNumero = (
-        evento: React.ChangeEvent<HTMLInputElement>,
-        setter: (value: React.SetStateAction<number>) => void,
-        campo: number
-    ) => {
-        if (evento.target.value == "") {
-            if (campo.toString().length == 1) {
-                setter(0);
-            }
-        } else if (isNaN(evento.target.valueAsNumber)) {
-            evento.preventDefault();
-        } else {
-            const parsedText = parseFloat(
-                evento.target.valueAsNumber.toFixed(3)
-            );
-            setter(parsedText);
-        }
     };
 
     const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
@@ -177,107 +161,74 @@ export default function AdicionarMaterialOrcamento() {
                 <div className={style.Form__Dados}>
                     <div>
                         <label htmlFor="precoUnitario">Preço Unitário</label>
-                        <Input
-                            type="number"
+                        <InputDinheiro
+                            campo={precoUnitario}
+                            setter={setPrecoUnitario}
                             id="precoUnitario"
-                            value={precoUnitario.toString()}
-                            onChange={(evento) =>
-                                verificarInputDeNumero(
-                                    evento,
-                                    setPrecoUnitario,
-                                    precoUnitario
-                                )
-                            }
                             onBlur={() => calcularCamposDisabled()}
-                            min="0"
-                            step="0.001"
-                        />
+                            valorPadrao={respostaAxios.precoUnitarioMaterial}
+                        ></InputDinheiro>
                     </div>
                     <div>
                         <label htmlFor="quantidadeBrutaUtilizada">
                             Quantidade Bruta Utilizada
                         </label>
-                        <Input
-                            type="number"
+                        <InputNumerico
                             id="quantidadeBrutaUtilizada"
-                            value={quantidadeBrutaUtilizada.toString()}
-                            onChange={(evento) =>
-                                verificarInputDeNumero(
-                                    evento,
-                                    setQuantidadeBrutaUtilizada,
-                                    quantidadeBrutaUtilizada
-                                )
-                            }
                             onBlur={() => calcularCamposDisabled()}
-                            min="0"
-                            step="0.001"
+                            campo={quantidadeBrutaUtilizada}
+                            casasDecimais={3}
+                            setter={setQuantidadeBrutaUtilizada}
+                            valorPadrao={respostaAxios.quantidadeUtilizada}
                         />
                     </div>
                     <div>
                         <label htmlFor="perdaPercentual">
                             Perda Percentual
                         </label>
-                        <Input
-                            type="number"
+                        <InputPercentual
+                            campo={perdaPercentual}
+                            setter={setPerdaPercentual}
                             id="perdaPercentual"
-                            value={perdaPercentual.toString()}
-                            onChange={(evento) => {
-                                verificarInputDeNumero(
-                                    evento,
-                                    setPerdaPercentual,
-                                    perdaPercentual
-                                );
-                            }}
                             onBlur={() => calcularCamposDisabled()}
-                            min="0"
-                            step="0.001"
+                            valorPadrao={respostaAxios.perdaPercentual}
                         />
                     </div>
 
                     <div>
                         <label htmlFor="perdaBruta">Perda Bruta</label>
-                        <Input
-                            type="number"
+                        <InputNumerico
                             disabled
                             id="perdaBruta"
-                            value={perdaBruta.toString()}
-                            onChange={(evento) =>
-                                setPerdaBruta(evento.target.valueAsNumber)
-                            }
-                            min="0"
-                            step="0.001"
+                            campo={perdaBruta}
+                            casasDecimais={3}
+                            setter={setPerdaBruta}
+                            valorPadrao={respostaAxios.perdaMaterial}
                         />
                     </div>
                     <div>
                         <label htmlFor="custoPerda">Custo de Perda</label>
-                        <Input
-                            type="number"
+                        <InputDinheiro
                             disabled
                             id="custoPerda"
-                            value={custoPerda.toString()}
-                            onChange={(evento) =>
-                                setCustoPerda(evento.target.valueAsNumber)
-                            }
-                            min="0"
-                            step="0.001"
+                            campo={custoPerda}
+                            setter={setCustoPerda}
+                            valorPadrao={respostaAxios.custoPerda}
                         />
                     </div>
                     <div>
                         <label htmlFor="quantidadeTotalComPerda">
                             Quantidade Total com Perda
                         </label>
-                        <Input
-                            type="number"
+                        <InputNumerico
                             disabled
                             id="quantidadeTotalComPerda"
-                            value={quantidadeTotalComPerda.toString()}
-                            onChange={(evento) =>
-                                setQuantidadeTotalComPerda(
-                                    evento.target.valueAsNumber
-                                )
+                            campo={quantidadeTotalComPerda}
+                            casasDecimais={3}
+                            setter={setQuantidadeTotalComPerda}
+                            valorPadrao={
+                                respostaAxios.quantidadeUtilizadaComPerda
                             }
-                            min="0"
-                            step="0.001"
                         />
                     </div>
 
@@ -285,16 +236,12 @@ export default function AdicionarMaterialOrcamento() {
                         <label htmlFor="custoTotalItem">
                             Custo Total do Item
                         </label>
-                        <Input
-                            type="number"
+                        <InputDinheiro
                             disabled
                             id="custoTotalItem"
-                            value={custoTotalItem.toString()}
-                            onChange={(evento) =>
-                                setCustoTotalItem(evento.target.valueAsNumber)
-                            }
-                            min="0"
-                            step="0.001"
+                            campo={custoTotalItem}
+                            setter={setCustoTotalItem}
+                            valorPadrao={respostaAxios.custoTotalItem}
                         />
                     </div>
                 </div>

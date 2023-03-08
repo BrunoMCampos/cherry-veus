@@ -12,10 +12,10 @@ import { IPageable } from "types/IPageable";
 
 import style from "pages/Orcamentos/Orcamentos.module.scss";
 import BotaoSalvar from "components/Botoes/BotaoSalvar";
-import VerificarNumerosInput from "types/VerificarNumerosInput";
 import BotaoPaginaAnterior from "components/Botoes/BotaoPaginaAnterior";
 import BotaoProximaPagina from "components/Botoes/BotaoProximaPagina";
-import InputParaApenasNumeros from "types/InputParaApenasNumeros";
+import InputDinheiro from "components/InputDinheiro";
+import InputPercentual from "components/InputPercentual";
 
 export default function CadastrarOrcamento() {
     const navigate = useNavigate();
@@ -28,15 +28,29 @@ export default function CadastrarOrcamento() {
     const [itensOrcamento, setItensOrcamento] =
         useState<DadosCompletosItemOrcamento[]>();
 
-    const [percentualLucro, setPercentualLucro] = useState("");
+    const [percentualLucro, setPercentualLucro] = useState(0);
     const [custoTotal, setCustoTotal] = useState(0);
     const [precoVenda, setPrecoVenda] = useState(0);
-    const [custoMaoDeObra, setCustoMaoDeObra] = useState("");
-    const [percentualImposto, setPercentualImposto] = useState("");
-    const [outrasDespesas, setOutrasDespesas] = useState("");
+    const [custoMaoDeObra, setCustoMaoDeObra] = useState(0);
+    const [percentualImposto, setPercentualImposto] = useState(0);
+    const [outrasDespesas, setOutrasDespesas] = useState(0);
 
     const [proximaPagina, setProximaPagina] = useState("");
     const [paginaAnterior, setPaginaAnterior] = useState("");
+
+    const [respostaAxios, setRespostaAxios] =
+        useState<DadosListagemGeralOrcamento>({
+            codigoOrcamento: 0,
+            codigoVeu: 0,
+            custoDespesas: 0,
+            custoMaoDeObra: 0,
+            custoTotal: 0,
+            dataDeCriacao: "",
+            nomeVeu: "",
+            percentualImposto: 0,
+            percentualLucro: 0,
+            precoVenda: 0,
+        });
 
     useEffect(() => {
         instanciaAxios
@@ -44,21 +58,14 @@ export default function CadastrarOrcamento() {
             .then((resposta) => {
                 setNomeVeu(resposta.data.nomeVeu);
                 setCodigoOrcamento(resposta.data.codigoOrcamento);
-                setPercentualLucro(
-                    resposta.data.percentualLucro.toFixed(2).replace(".", ",") + " %"
-                );
+                setPercentualLucro(resposta.data.percentualLucro);
                 setPrecoVenda(resposta.data.precoVenda);
                 setCustoTotal(resposta.data.custoTotal);
                 setCodigoVeu(resposta.data.codigoVeu);
-                setPercentualImposto(
-                    resposta.data.percentualImposto.toFixed(2).replace(".", ",") + " %"
-                );
-                setOutrasDespesas(
-                    "R$ " + resposta.data.custoDespesas.toFixed(2).replace(".", ",")
-                );
-                setCustoMaoDeObra(
-                    "R$ " + resposta.data.custoMaoDeObra.toFixed(2).replace(".", ",")
-                );
+                setPercentualImposto(resposta.data.percentualImposto);
+                setOutrasDespesas(resposta.data.custoDespesas);
+                setCustoMaoDeObra(resposta.data.custoMaoDeObra);
+                setRespostaAxios(resposta.data);
             });
         navegar(`orcamentos/${parametros.codigo}/itens-orcamento`);
     }, [parametros]);
@@ -68,10 +75,10 @@ export default function CadastrarOrcamento() {
         instanciaAxios
             .put(`orcamentos/${parametros.codigo}`, {
                 codigoVeu: codigoVeu,
-                percentualLucro: percentualLucro.replace(",", ".").replace(" %",""),
-                custoMaoDeObra: custoMaoDeObra.replace(",", ".").replace("R$ ",""),
-                custoDespesas: outrasDespesas.replace(",", ".").replace("R$ ",""),
-                custoImpostoPercentual: percentualImposto.replace(",", ".").replace(" %",""),
+                percentualLucro: percentualLucro,
+                custoMaoDeObra: custoMaoDeObra,
+                custoDespesas: outrasDespesas,
+                custoImpostoPercentual: percentualImposto,
             })
             .then(() => {
                 navigate(`../orcamentos/editar/${parametros.codigo}`);
@@ -145,13 +152,13 @@ export default function CadastrarOrcamento() {
                                 }
                             >
                                 <label htmlFor="custoTotal">Custo Total</label>
-                                <Input
+                                <InputDinheiro
                                     disabled
                                     id="custoTotal"
-                                    value={`R$ ${custoTotal
-                                        .toFixed(2)
-                                        .replace(".", ",")}`}
-                                ></Input>
+                                    campo={custoTotal}
+                                    setter={setCustoTotal}
+                                    valorPadrao={respostaAxios.custoTotal}
+                                ></InputDinheiro>
                             </div>
                             <div
                                 className={
@@ -161,28 +168,12 @@ export default function CadastrarOrcamento() {
                                 <label htmlFor="percentualDeLucro">
                                     Percentual de Lucro(%)
                                 </label>
-                                <Input
-                                    type="text"
+                                <InputPercentual
                                     id="percentualDeLucro"
-                                    value={`${percentualLucro}`}
-                                    onChange={(evento) => {
-                                        InputParaApenasNumeros(
-                                            evento,
-                                            setPercentualLucro,
-                                            100
-                                        );
-                                    }}
-                                    onBlur={() => {
-                                        setPercentualLucro(
-                                            `${percentualLucro} %`
-                                        );
-                                    }}
-                                    onFocus={() => {
-                                        setPercentualLucro(
-                                            `${percentualLucro.replace(" %","")}`
-                                        );
-                                    }}
-                                ></Input>
+                                    campo={percentualLucro}
+                                    setter={setPercentualLucro}
+                                    valorPadrao={respostaAxios.percentualLucro}
+                                ></InputPercentual>
                             </div>
                             <div
                                 className={
@@ -192,27 +183,12 @@ export default function CadastrarOrcamento() {
                                 <label htmlFor="custoDespesas">
                                     Outras Despesas (R$)
                                 </label>
-                                <Input
-                                    type="text"
+                                <InputDinheiro
                                     id="custoDespesas"
-                                    value={`${outrasDespesas}`}
-                                    onChange={(evento) => {
-                                        InputParaApenasNumeros(
-                                            evento,
-                                            setOutrasDespesas
-                                        );
-                                    }}
-                                    onBlur={() => {
-                                        setOutrasDespesas(
-                                            `R$ ${outrasDespesas}`
-                                        );
-                                    }}
-                                    onFocus={() => {
-                                        setOutrasDespesas(
-                                            `${outrasDespesas.replace("R$ ","")}`
-                                        );
-                                    }}
-                                ></Input>
+                                    campo={outrasDespesas}
+                                    setter={setOutrasDespesas}
+                                    valorPadrao={respostaAxios.custoDespesas}
+                                ></InputDinheiro>
                             </div>
                         </div>
                         <div
@@ -228,13 +204,13 @@ export default function CadastrarOrcamento() {
                                 <label htmlFor="precoDeVenda">
                                     Preço de Venda
                                 </label>
-                                <Input
+                                <InputDinheiro
                                     disabled
                                     id="precoDeVenda"
-                                    value={`R$ ${precoVenda
-                                        .toFixed(2)
-                                        .replace(".", ",")}`}
-                                ></Input>
+                                    campo={precoVenda}
+                                    setter={setPrecoVenda}
+                                    valorPadrao={respostaAxios.precoVenda}
+                                ></InputDinheiro>
                             </div>
                             <div
                                 className={
@@ -244,28 +220,12 @@ export default function CadastrarOrcamento() {
                                 <label htmlFor="impostoPercentual">
                                     Percentual de Imposto Sobre Venda (%)
                                 </label>
-                                <Input
-                                    type="text"
+                                <InputPercentual
                                     id="impostoPercentual"
-                                    value={`${percentualImposto}`}
-                                    onChange={(evento) => {
-                                        InputParaApenasNumeros(
-                                            evento,
-                                            setPercentualImposto,
-                                            100
-                                        );
-                                    }}
-                                    onBlur={() => {
-                                        setPercentualImposto(
-                                            `${percentualImposto} %`
-                                        );
-                                    }}
-                                    onFocus={() => {
-                                        setPercentualImposto(
-                                            `${percentualImposto.replace(" %","")}`
-                                        );
-                                    }}
-                                ></Input>
+                                    campo={percentualImposto}
+                                    setter={setPercentualImposto}
+                                    valorPadrao={respostaAxios.percentualImposto}
+                                ></InputPercentual>
                             </div>
                             <div
                                 className={
@@ -275,27 +235,12 @@ export default function CadastrarOrcamento() {
                                 <label htmlFor="custoMaoDeObra">
                                     Custo de Mão de Obra (R$)
                                 </label>
-                                <Input
-                                    type="text"
+                                <InputDinheiro
                                     id="custoMaoDeObra"
-                                    value={`${custoMaoDeObra}`}
-                                    onChange={(evento) => {
-                                        InputParaApenasNumeros(
-                                            evento,
-                                            setCustoMaoDeObra
-                                        );
-                                    }}
-                                    onBlur={() => {
-                                        setCustoMaoDeObra(
-                                            `R$ ${custoMaoDeObra}`
-                                        );
-                                    }}
-                                    onFocus={() => {
-                                        setCustoMaoDeObra(
-                                            `${custoMaoDeObra.replace("R$ ","")}`
-                                        );
-                                    }}
-                                ></Input>
+                                    campo={custoMaoDeObra}
+                                    setter={setCustoMaoDeObra}
+                                    valorPadrao={respostaAxios.custoMaoDeObra}
+                                ></InputDinheiro>
                             </div>
                         </div>
                     </div>

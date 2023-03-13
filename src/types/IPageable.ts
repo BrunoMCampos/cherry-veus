@@ -1,7 +1,7 @@
-export interface IPageable<T>{
-    content:T[]
-    last:boolean,
-    totalPages:number,
-    number:number,
-    first:boolean
+export interface IPageable<T> {
+    content: T[];
+    totalElements: number;
+    totalPages: number;
+    nextPage: string;
+    previousPage: string;
 }

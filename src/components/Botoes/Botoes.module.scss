@@ -1,24 +1,27 @@
-.Botao{
+.Botao {
     background-color: rgba(204, 233, 255, 1);
     border-radius: 16px;
     border-width: 0px;
-    color:rgba(41, 64, 82, 1);
+    color: rgba(41, 64, 82, 1);
     font-size: 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
     height: 36px;
     padding: 8px 24px;
-    margin-left: 20px;
     white-space: nowrap;
 
-    span{
+    span {
         width: 100%;
     }
 }
-.Botao:hover{
-    cursor:pointer;
+.Botao:hover {
+    cursor: pointer;
 }
-.Botao:disabled{
+.Botao:disabled {
     background-color: rgba(225, 225, 225, 1);
+}
+
+.BotaoExcluir {
+    background-color: rgba(255, 204, 204, 1);
 }

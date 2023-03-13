@@ -3,6 +3,19 @@
     margin-bottom: 16px;
 }
 
+.SubTituloDetalhar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid;
+    padding: 8px;
+    align-items: center;
+    &__Texto {
+        width: 100%;
+    }
+}
+
 .Form {
     display: flex;
     flex-direction: column;
@@ -42,12 +55,16 @@
         justify-content: space-between;
         margin-right: 8px;
 
-        button {
-            margin-left: 8px;
-        }
-
         a {
             margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        div {
+            width: 100%;
+            button {
+                width: 100%;
+            }
         }
     }
 
@@ -89,12 +106,12 @@
         margin-top: 8px;
         padding: 8px;
 
-        &__Linha{
+        &__Linha {
             display: flex;
-            align-items: end;
+            align-items: flex-end;
         }
 
-        &__Coluna{
+        &__Coluna {
             display: flex;
             flex-direction: column;
         }

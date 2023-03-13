@@ -1,20 +1,21 @@
-import IconeExcluir from "components/Icones/Excluir";
 import IconeEditar from "components/Icones/Editar";
-import Input from "components/Input";
+import IconeExcluir from "components/Icones/Excluir";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
+import { useDeletarItemOrcamento } from "state/hooks/itemOrcamento/useDeletarItemOrcamento";
+import { IItemOrcamento } from "types/IItemOrcamento";
 import style from "./CardMaterialOrcamento.module.scss";
-import { DadosCompletosItemOrcamento } from "types/DadosCompletosItemOrcamento";
-import instanciaAxios from "InstanciaAxios/instanciaAxios";
 
 export default function CardMaterialOrcamento({
     dadosItemOrcamento,
 }: {
-    dadosItemOrcamento: DadosCompletosItemOrcamento;
+    dadosItemOrcamento: IItemOrcamento;
 }) {
     const parametros = useParams();
 
     const navegar = useNavigate();
+
+    const deletarItemOrcamento = useDeletarItemOrcamento();
 
     const excluirItem = () => {
         if (
@@ -22,13 +23,9 @@ export default function CardMaterialOrcamento({
                 `Deseja realmente excluir o material: ${dadosItemOrcamento.nomeMaterial}?`
             )
         ) {
-            instanciaAxios
-                .delete(
-                    `orcamentos/${parametros.codigo}/itens-orcamento/${dadosItemOrcamento.codigoItemOrcamento}`
-                )
-                .then(() => {
-                    navegar(`../orcamentos/editar/${parametros.codigo}`);
-                });
+            deletarItemOrcamento(dadosItemOrcamento).then(() => {
+                navegar(`../orcamentos/detalhar/${parametros.codigoOrcamento}`);
+            });
         }
     };
 
@@ -52,18 +49,22 @@ export default function CardMaterialOrcamento({
                     <span className={style.Card__Cabecalho__Linha__Titulo}>
                         Custo Total do Item:
                     </span>
-                    <span>{`R$ ${dadosItemOrcamento.custoTotalItem
-                        .toFixed(2)
-                        .replace(".", ",")}`}</span>
+                    <span>{`R$ ${
+                        dadosItemOrcamento.custoTotalItem
+                            ? dadosItemOrcamento.custoTotalItem.toFixed(2).replace(".", ",")
+                            : "0,00"
+                    }`}</span>
                 </div>
             </div>
 
             <div className={style.Card__DadosPrincipais}>
                 <div className={style.Card__DadosPrincipais__Item}>
                     <span>Preço Unitário</span>
-                    <span>{`R$ ${dadosItemOrcamento.precoUnitarioMaterial
-                        .toFixed(2)
-                        .replace(".", ",")}`}</span>
+                    <span>{`R$ ${
+                        dadosItemOrcamento.precoUnitarioMaterial
+                            ? dadosItemOrcamento.precoUnitarioMaterial.toFixed(2).replace(".", ",")
+                            : "0,00"
+                    }`}</span>
                 </div>
                 <div className={style.Card__DadosPrincipais__Item}>
                     <span>Quantidade Bruta Utilizada</span>
@@ -81,21 +82,27 @@ export default function CardMaterialOrcamento({
                 </div>
                 <div className={style.Card__DadosPrincipais__Item}>
                     <span>Custo de Perda</span>
-                    <span>{`R$ ${dadosItemOrcamento.custoPerda
-                        .toFixed(2)
-                        .replace(".", ",")}`}</span>
+                    <span>{`R$ ${
+                        dadosItemOrcamento.custoPerda
+                            ? dadosItemOrcamento.custoPerda.toFixed(2).replace(".", ",")
+                            : "0,00"
+                    }`}</span>
                 </div>
                 <div className={style.Card__DadosPrincipais__Item}>
                     <span>Perda Bruta</span>
-                    <span>{`${dadosItemOrcamento.perdaMaterial
-                        .toFixed(2)
-                        .replace(".", ",")}`}</span>
+                    <span>{`${
+                        dadosItemOrcamento.perdaMaterial
+                            ? dadosItemOrcamento.perdaMaterial.toFixed(2).replace(".", ",")
+                            : "0,00"
+                    }`}</span>
                 </div>
                 <div className={style.Card__DadosPrincipais__Item}>
                     <span>Quantidade Total com Perda</span>
-                    <span>{`${dadosItemOrcamento.quantidadeUtilizadaComPerda
-                        .toFixed(2)
-                        .replace(".", ",")}`}</span>
+                    <span>{`${
+                        dadosItemOrcamento.quantidadeUtilizadaComPerda
+                            ? dadosItemOrcamento.quantidadeUtilizadaComPerda.toFixed(2).replace(".", ",")
+                            : "0,00"
+                    }`}</span>
                 </div>
             </div>
         </div>

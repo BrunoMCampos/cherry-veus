@@ -1,26 +1,28 @@
 import style from "./BarraDePesquisa.module.scss";
 import BotaoPesquisar from "components/Botoes/BotaoPesquisar";
 import Input from "components/Input";
-import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { SetterOrUpdater } from "recoil";
+import { IPageable } from "types/IPageable";
+import instanciaAxios from "InstanciaAxios/instanciaAxios";
 
-export default function BarraDePesquisa({ destino }: { destino?: string }) {
-
-    const parametros = useParams();
-
+export default function BarraDePesquisa<T>({
+    setterRecoil,
+    entidade,
+}: {
+    setterRecoil: SetterOrUpdater<IPageable<T>>;
+    entidade: string;
+}) {
     const [pesquisa, setPesquisa] = useState("");
 
-    const submeterForm = (evento: React.FormEvent<HTMLFormElement>) =>{
-        evento.preventDefault();
-        document.getElementById("botaoPesquisar")?.click();
+    const submeterForm = (evento?: React.FormEvent<HTMLFormElement>) => {
+        evento?.preventDefault();
+        instanciaAxios
+            .get<IPageable<T>>(`${entidade}?pesquisa=${encodeURI(pesquisa.replace(",","."))}`)
+            .then((resposta) => {
+                setterRecoil(resposta.data);
+            });
     };
-    
-    useEffect(() =>{
-        if(parametros.pesquisa != null)
-            setPesquisa(parametros.pesquisa);
-        else 
-            setPesquisa("");
-    }, [parametros]);
 
     return (
         <form className={style.BarraDePesquisa} onSubmit={submeterForm}>
@@ -30,9 +32,9 @@ export default function BarraDePesquisa({ destino }: { destino?: string }) {
                 value={pesquisa}
                 onChange={(evento) => setPesquisa(evento.target.value)}
             />
-            <Link to={"../" + destino + pesquisa} id="botaoPesquisar">
+            <div onClick={() => submeterForm()}>
                 <BotaoPesquisar />
-            </Link>
+            </div>
         </form>
     );
 }
